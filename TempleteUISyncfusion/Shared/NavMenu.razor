@@ -7,22 +7,99 @@
         </li>
     </ul>
  <div class="separator"></div>
-    <div class="scroller">
-       <ul class="nav flex-column">
-       			<li class="nav-item px-3">
- 	<NavLink class="nav-link" href="datagrid-features">
- 	<span class="syncfusion-blazor-icons syncfusion-blazor-icon-datagrid" aria-hidden="true"></span><span class="displayText" style="margin-left:5px">DataGrid</span>
- 	</NavLink>
- 	</li>
-	<li class="nav-item px-3">
- 	<NavLink class="nav-link" href="treegrid-features">
- 	<span class="syncfusion-blazor-icons syncfusion-blazor-icon-treegrid" aria-hidden="true"></span><span class="displayText" style="margin-left:5px">Tree Grid</span>
- 	</NavLink>
- 	</li>
-
-       </ul>
+    <div class="scroller">                    
+        <SfTreeView TValue="TreeItem" SortOrder="Syncfusion.Blazor.Navigations.SortOrder.Ascending">
+            <TreeViewFieldsSettings DataSource="@TreeDataSource" Id="NodeId" Text="NodeText"  Child="@("Child")" IconCss="Icon" ImageUrl="ImageUrl"></TreeViewFieldsSettings>
+        </SfTreeView>                     
     </div>
 </div>
+
+@code {
+    // Specifies the DataSource value for TreeView component.
+    List<TreeItem> TreeDataSource = new List<TreeItem>();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        TreeDataSource.Add(new TreeItem
+        {
+            NodeId = "01",
+            NodeText = "Music",
+            Icon = "oi-folder",
+            Child = new List<TreeItem>()
+            {
+                new TreeItem { NodeId = "01-01", NodeText = "Gouttes.mp3", Icon = "oi-document" }
+            }
+        });
+        TreeDataSource.Add(new TreeItem
+        {
+            NodeId = "02",
+            NodeText = "Videos",
+            Icon = "oi-folder",
+            Child = new List<TreeItem>()
+            {
+                new TreeItem { NodeId = "02-01", NodeText = "Naturals.mp4", Icon = "oi-document" },
+                new TreeItem { NodeId = "02-02", NodeText = "Wild.mpeg", Icon = "oi-document" },
+            },
+        });
+        TreeDataSource.Add(new TreeItem
+        {
+            NodeId = "03",
+            NodeText = "Documents",
+            Icon = "oi-folder",
+            Child = new List<TreeItem>()
+            {
+                new TreeItem { NodeId = "03-01", NodeText = "Environment Pollution.docx", Icon = "oi-document" },
+                new TreeItem { NodeId = "03-02", NodeText = "Global Water, Sanitation, & Hygiene.docx", Icon = "oi-document" },
+                new TreeItem { NodeId = "03-03", NodeText = "Global Warming.ppt", Icon = "oi-document" },
+                new TreeItem { NodeId = "03-04", NodeText = "Social Network.pdf", Icon = "oi-document" },
+                new TreeItem { NodeId = "03-05", NodeText = "Youth Empowerment.pdf", Icon = "oi-document" },
+            },
+        });
+        TreeDataSource.Add(new TreeItem
+        {
+            NodeId = "04",
+            NodeText = "Pictures",
+            Icon = "oi-folder",
+            Expanded = true,
+            Child = new List<TreeItem>()
+            {
+                new TreeItem { NodeId = "04-01", NodeText = "Camera Roll", Icon = "oi-folder", Expanded=true,
+                Child = new List<TreeItem>(){
+                new TreeItem { NodeId = "04-01-01", NodeText = "WIN_20160726_094117.JPG",  Icon = "oi-document"},
+                new TreeItem { NodeId = "04-01-02", NodeText = "WIN_20160726_094118.JPG", Icon = "oi-document"},
+                } },
+                new TreeItem { NodeId = "04-02", NodeText = "Wind.jpg", Icon = "oi-document" },
+                new TreeItem { NodeId = "04-03", NodeText = "Stone.jpg", Icon = "oi-document" },
+            },
+        });
+        TreeDataSource.Add(new TreeItem
+        {
+            NodeId = "05",
+            NodeText = "Downloads",
+            Icon = "oi-folder",
+            Child = new List<TreeItem>()
+            {
+                new TreeItem { NodeId = "05-01", NodeText = "UI-Guide.pdf", Icon = "oi-document" },
+                new TreeItem { NodeId = "05-02", NodeText = "Tutorials.zip", Icon = "oi-document" },
+                new TreeItem { NodeId = "05-03", NodeText = "Game.exe", Icon = "oi-document" },
+                new TreeItem { NodeId = "05-04", NodeText = "TypeScript.7z", Icon = "oi-document" },
+            },
+        });
+    }
+    class TreeItem
+    {
+        public string NodeId { get; set; }
+        public string NodeText { get; set; }
+        public string Icon { get; set; }
+        public string ImageUrl { get; set; }
+        public bool Expanded { get; set; }
+        public bool Selected { get; set; }
+        public List<TreeItem> Child;
+    }
+}
+
+
+
   <style>
  .scroller {
          height: calc(100vh - 160px) !important;
@@ -53,4 +130,40 @@
          margin: 1rem;
          margin-top: 0px;
      }
+     /* Sample specific styles */
+    .control_wrapper {
+        max-width: 500px;
+        margin: auto;
+        border: 1px solid #dddddd;
+        border-radius: 3px;
+        max-height: 470px;
+        overflow: auto;
+    }
+     /* Loading sprite image for TreeView */    
+    .e-treeview .e-list-icon {
+        background-repeat: no-repeat;        
+        height: 20px;     
+        color: #FFF;
+        font-family: "Icons";
+        margin: 0;
+        width: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .e-treeview .e-list-text {
+        color: white;
+    }
+    .e-treeview .e-list-img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .e-treeview> .e-ul {
+        overflow: hidden;
+    }
+    .e-treeview .e-icon-collapsible, .e-treeview .e-icon-expandable {
+        color: #FFF;
+    }
+
 </style>
+
